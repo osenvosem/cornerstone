@@ -1,2 +1,1 @@
-# cornerstone
-Express, Mongoose, Redux, React starter project
+Feathers, Mongoose, Redux, React starter project

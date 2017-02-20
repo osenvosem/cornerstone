@@ -1,8 +1,13 @@
 {
   "host": "localhost",
-  "port": 3030,
+  "port": 3000,
+  "wdsPort": 8080,
   "mongodb": "mongodb://localhost:27017/mydb",
-  "public": "../public",
+  "publicDir": "../public",
+  "publicPath": "/assets/",
+  "jsPath": "",
+  "cssPath": "",
+  "imagesPath": "",
   "auth": {
     "token": {
       "secret": "BH4ttTkuiIdu6k3KGxf0pboE7rb9FEuub7nDzDjOXd8PTN7wwR2snWHLGSOWlJpc4NjMT8yzOODZFKzf9Wr4ZQ=="

@@ -4,7 +4,7 @@ import Menu from './components/Menu/'
 import Home from '../Home'
 
 const menuItems = [
-  { path: '/', label: 'Home'},
+  { path: '/', label: 'Home' },
   { path: '/one', label: 'One' },
   { path: '/two', label: 'Two' },
   { path: '/missed', label: 'Missed' }
@@ -22,7 +22,7 @@ export default function Main() {
           <Route exact path="/" component={Home} />
           <Route path="/one" component={One} />
           <Route path="/two" component={Two} />
-          <Route render={() => <h2>404 Not Found</h2>}/>
+          <Route render={() => <h2>404 Not Found</h2>} />
         </Switch>
       </main>
     </div>
@@ -31,7 +31,7 @@ export default function Main() {
 
 const One = () => (
   <h2>One here</h2>
-) 
+)
 
 const Two = () => (
   <h2>Two here </h2>

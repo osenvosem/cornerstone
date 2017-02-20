@@ -1,46 +1,50 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
+import { styleSheet } from 'styled-components'
 import Root from '../../../app/Root.jsx'
 
 
-export default function () {
+function configureSSR() {
   const app = this
 
-  const renderLayout = (html, state = {}) => {
-    return `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <title>My lovely app</title>
-      </head>
-      <body>
-        <div id="root"><div>${html}</div></div>
+  app.get('*', (req, res) => {
 
-        <script>window.__INITIAL_STATE__ = ${JSON.stringify(state)}</script>
-        <script src="/assets/manifest.bundle.js"></script>
-        <script src="/assets/vendor.bundle.js"></script>
-        <script src="/assets/main.bundle.js"></script>
-      </body>
-      </html>
-    `
-  }
+    const renderLayout = (html, css, state = {}) => {
+      return `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <title>My lovely app</title>
+          <style type="text/css">${css}</style>
+        </head>
+        <body>
+          <div id="root">${html}</div>
 
-  app.use('*', (req, res) => {
+          <script>window.__INITIAL_STATE__ = ${JSON.stringify(state)}</script>
+          <script src="/assets/${app.get('jsPath')}/manifest.bundle.js"></script>
+          <script src="/assets/${app.get('jsPath')}/vendor.bundle.js"></script>
+          <script src="/assets/${app.get('jsPath')}/main.bundle.js"></script>
+        </body>
+        </html>
+      `
+    }
+
     const context = {}
-    const renderedLayout = renderLayout(
-      renderToString(
-        <StaticRouter location={req.url} context={context}>
-          <Root />
-        </StaticRouter>
-      ), {}
+    const html = renderToString(
+      <StaticRouter location={req.url} context={context}>
+        <Root />
+      </StaticRouter>
     )
+    const css = styleSheet.getCSS()
 
     if (context.url) {
       return res.redirect(302, context.url)
     } else {
-      return res.send(renderedLayout)
+      return res.send(renderLayout(html, css))
     }
   }) 
 }
+
+export default configureSSR

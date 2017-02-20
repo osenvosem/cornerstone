@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styles from './style.css'
+import styled from 'styled-components'
 
 export default function Menu({ items }) {
   return (
-    <nav className={styles.menu}>
+    <Nav>
       <ul>
         {items.map(item => (
           <li key={item.path}>
@@ -12,6 +12,13 @@ export default function Menu({ items }) {
           </li>
         ))}
       </ul>
-    </nav>
+    </Nav>
   )
 }
+
+const Nav = styled.nav`
+  display: block;
+   
+  & ul { list-style: none; }
+  & li { display: inline-block; margin-right: 10px; }
+`

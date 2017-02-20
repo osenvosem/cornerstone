@@ -9,21 +9,21 @@ import bodyParser from 'body-parser'
 import socketio from 'feathers-socketio'
 import middleware from './middleware'
 import services from './services'
+import _ from 'lodash'
 
 const app = feathers()
 
 app.configure(configuration(path.resolve(__dirname, '..')))
 
 app.use(compress())
-  .use(favicon(path.join(app.get('public'), 'favicon.ico')))
+  .use(favicon(path.join(app.get('publicDir'), 'favicon.ico')))
   .use(bodyParser.json(), bodyParser.urlencoded({ extended: true }))
-  .use('/assets/', feathers.static(path.join(app.get('public'), 'assets')))
+  .use(app.get('publicPath'), feathers.static(path.join(app.get('publicDir'), 'assets')))
   .configure(hooks())
   .configure(rest())
   .configure(socketio())
-  .configure(middleware)
   .configure(services)
-
+  .configure(middleware)
 
 app.listen(3000)
 
